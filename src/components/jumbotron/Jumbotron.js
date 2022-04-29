@@ -2,7 +2,7 @@ import {HeaderBadgeIcon, HeaderPatternIcon} from "../../assets/header";
 
 export const Jumbotron = () => {
     return(
-		<div className={"flex flex-col h-64 items-center place-content-center"}>
+		<div className={"flex flex-col items-center place-content-center m-9"}>
 			<img className={"ml-2 h-16 w-16 inline-flex align-middle"}  alt={"Profile menu"} src={HeaderBadgeIcon}  />
 			<div className={"inline-flex items-center p-4"}>
 				<h1 className={"text-3xl font-extrabold"}> Testimonials I've left </h1>

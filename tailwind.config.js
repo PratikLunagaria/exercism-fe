@@ -10,7 +10,8 @@ module.exports = {
 				borderL: "#C8D5EF",
 				cautionL: "#ED8A28",
 				cautionBgL: "#FFF4E3",
-				warningL: "#E25154"
+				warningL: "#E25154",
+				listBorderL: "#D5D8E4"
 			}
 		}
 	},
