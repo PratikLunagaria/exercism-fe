@@ -1,4 +1,5 @@
 import {ArrowDownIcon} from "../../../assets/testimonials";
+import moment from "moment";
 
 export const ListItem = ({ track, mentor, exercise, content, created_at }) => {
 	return(
@@ -12,12 +13,12 @@ export const ListItem = ({ track, mentor, exercise, content, created_at }) => {
 						<div className={"text-sm text-inactiveL"}>on {exercise.title && exercise.title} in {track.title && track.title}</div>
 					</div>
 				</div>
-				<div className={"flex flex-row text-inactiveL w-2/4"}>
+				<div className={"flex flex-row w-2/4"}>
 					{content && content}
 				</div>
 				<div className={"flex text-inactiveL w-1/6 flex-row-reverse"}>
 					<img className={"ml-14 h-5 w-5 inline-flex rounded-full align-middle -rotate-90"}  alt={"reputation"} src={ArrowDownIcon}  />
-					<div className={"justify-self-end"}>{ created_at && created_at }</div>
+					<div className={"justify-self-end font-semibold"}>{ created_at && moment(created_at).fromNow() }</div>
 				</div>
 			</div>
 		</a>
