@@ -1,10 +1,9 @@
 import {ListItem} from "./ListItem";
-import {testimonialsList} from "../../../mock";
 
-export const List = () =>{
+export const List = ({list}) =>{
 	return(
 		<div className={"flex flex-col grow overflow-y-auto"}>
-			{testimonialsList?.testimonials?.results.map((testimonial)=><ListItem {...testimonial}/>) }
+			{list.map((testimonial)=><ListItem {...testimonial}/>) }
 		</div>
 	)
 }

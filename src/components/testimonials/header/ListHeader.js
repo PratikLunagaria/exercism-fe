@@ -1,5 +1,4 @@
 import {TrackDropdown} from "./dropdown/TrackDropdown";
-import {trackList} from "../../../mock";
 import {SortDropdown} from "./dropdown/SortDropdown";
 import {FilterBox} from "./FilterBox";
 
@@ -8,15 +7,16 @@ const sortOpts = [
 	{title: 'Sort by Most Recent', slug:''},
 ]
 
-
-export const ListHeader = () => {
+export const ListHeader = ({trackList, onFilter}) => {
 	return (
 		<div className={"flex rounded-t-xl border-2 p-2 justify-between items-center"}>
-			<div className={"flex items-center"}>
+			<div className={"flex"}>
 				<TrackDropdown list={trackList.tracks}/>
-				<FilterBox/>
+				<FilterBox onFilter={onFilter}/>
 			</div>
-			<SortDropdown list={sortOpts}/>
+			<div className={"flex flex-1 justify-end"}>
+				<SortDropdown list={sortOpts}/>
+			</div>
 		</div>
 	)
 }

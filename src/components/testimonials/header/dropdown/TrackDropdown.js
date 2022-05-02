@@ -7,7 +7,7 @@ export const TrackDropdown = ({list}) => {
 	const [current, setCurrent] = useState(list[0])
 
 	return (
-		<div className="w-72 font-semibold">
+		<div className="pr-2 font-semibold">
 			<Listbox value={current} onChange={setCurrent}>
 				<div className="relative">
 					<Listbox.Button
@@ -30,7 +30,7 @@ export const TrackDropdown = ({list}) => {
 						leaveTo="opacity-0"
 					>
 						<Listbox.Options
-							className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+							className="absolute w-72 py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
 							{list.map((listElement) => (
 								<Listbox.Option
 									key={listElement.slug}
