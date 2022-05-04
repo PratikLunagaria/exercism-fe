@@ -2,20 +2,27 @@ import {TrackDropdown} from "./dropdown/TrackDropdown";
 import {SortDropdown} from "./dropdown/SortDropdown";
 import {FilterBox} from "./FilterBox";
 
-const sortOpts = [
-	{title: 'Sort by Oldest', slug:''},
-	{title: 'Sort by Most Recent', slug:''},
-]
+export const ListHeader = ({listParams, setListParams}) => {
+	const handleSearchChange = (inputQuery) => {
+		setListParams({...listParams, exercise: inputQuery})
+	}
 
-export const ListHeader = ({trackList, onFilter}) => {
+	const handleTrackChange = (selectedTrack) => {
+		setListParams({...listParams, track:selectedTrack.slug === 'all' ? undefined : selectedTrack.slug})
+	}
+
+	const handleSort = (selectedSort) => {
+		setListParams({...listParams, order: selectedSort.slug})
+	}
+
 	return (
 		<div className={"flex rounded-t-xl border-2 p-2 justify-between items-center"}>
 			<div className={"flex"}>
-				<TrackDropdown list={trackList.tracks}/>
-				<FilterBox onFilter={onFilter}/>
+				<TrackDropdown {...{listParams, handleTrackChange}}/>
+				<FilterBox {...{inputVal:listParams.exercise,handleSearchChange}}/>
 			</div>
 			<div className={"flex flex-1 justify-end"}>
-				<SortDropdown list={sortOpts}/>
+				<SortDropdown {...{sortType: listParams.order, handleSort}}/>
 			</div>
 		</div>
 	)

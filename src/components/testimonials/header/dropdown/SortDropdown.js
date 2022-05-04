@@ -1,17 +1,18 @@
-import {Fragment, useState} from 'react'
+import {Fragment} from 'react'
 import {Listbox, Transition} from '@headlessui/react'
 import {ArrowDownIcon} from "../../../../assets/testimonials";
+import {sortOptions} from "../../../../const";
 
-export const SortDropdown = ({list}) => {
-	const [current, setCurrent] = useState(list[0])
+export const SortDropdown = ({ sortType, handleSort }) => {
+	const sortedBy = sortOptions.filter(opt => opt.slug === sortType)[0]
 
 	return (
 		<div className="w-72 px-2">
-			<Listbox value={current} onChange={setCurrent}>
+			<Listbox value={sortedBy} onChange={handleSort}>
 				<div className="relative">
 					<Listbox.Button
 						className="focus:outline-none relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-						<span className="block truncate">{current.title}</span>
+						<span className="block truncate">{sortedBy.title}</span>
 						<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
 							<img
 								className={"ml-1 h-6 w-6 inline-flex align-middle"}
@@ -29,7 +30,7 @@ export const SortDropdown = ({list}) => {
 						<Listbox.Options
 							className="focus:outline-none z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 sm:text-sm"
 						>
-							{list.map((person, personIdx) => (
+							{sortOptions.map((person, personIdx) => (
 								<Listbox.Option
 									key={personIdx}
 									className={({active}) =>
