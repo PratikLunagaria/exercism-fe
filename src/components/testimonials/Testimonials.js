@@ -10,20 +10,29 @@ export const Testimonials = () => {
     const [pagination, setPagination] = useState({})
     const [listParams, setListParams] = useState(listParamsDefault)
     const [trackMetaList, setTrackMetaList] = useState([])
+    const [loading, setLoading] = useState(false)
     const isInitialMount = useRef(true);
 
     const findTrackMeta = (trc,trcList) => trcList.filter(trcObj=> trcObj.slug === trc)[0];
     const addTrackCount = useCallback((trcObj, trc, trackCount) => ({...trcObj, track_counts: trackCount[trc]}),[])
-    const fetchTestimonials = useCallback(() => getTestimonials(listParams)
-        .then((res) => {
-            setFilteredList(res.data?.testimonials?.results)
-            setPagination(res.data?.testimonials?.pagination)
-        })
-        .catch(err=> console.error(err)),[listParams])
+    const fetchTestimonials = useCallback(() => {
+        setLoading(true)
+        getTestimonials(listParams)
+            .then((res) => {
+                setFilteredList(res.data?.testimonials?.results)
+                setPagination(res.data?.testimonials?.pagination)
+                setLoading(false)
+            })
+            .catch(err => {
+                console.error(err)
+                setLoading(false)
+            })
+    },[listParams])
 
     useEffect(() =>{
         if (isInitialMount.current) {
             isInitialMount.current = false;
+            setLoading(true)
             getTestimonials(listParams)
                 .then((res) => {
                     setFilteredList(res.data?.testimonials?.results)
@@ -45,8 +54,12 @@ export const Testimonials = () => {
                             })
                             .catch(err=> console.error(err))
                     }
+                    setLoading(false)
                 })
-                .catch(err=> console.error(err));
+                .catch(err=> {
+                    setLoading(false)
+                    console.error(err)
+                });
         }
     },[addTrackCount, listParams, trackMetaList.length])
 
@@ -60,7 +73,7 @@ export const Testimonials = () => {
     return (
         <div className={"shadow-2xl border-2 min-w-fit flex flex-col rounded-xl mx-9 mb-9 h-4/5 text-xs lg:text-base "}>
             <ListHeader {...{listParams, setListParams, trackMetaList}}/>
-            <List list={filteredList}/>
+            <List {...{filteredList, loading}}/>
             <ListFooter {...{pagination,listParams, setListParams}}/>
         </div>
     )
