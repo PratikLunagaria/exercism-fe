@@ -10,7 +10,7 @@ export const ListItem = ({ track, mentor, exercise, content, created_at }) => {
 					<img className={"h-8 w-8 rounded-full ml-4"}  alt={mentor.slug && mentor.slug} src={mentor.avatar_url && mentor.avatar_url}  />
 					<div className={"ml-5"}>
 						<div className={"text-xs lg:text-base font-semibold"}>{mentor.handle && mentor.handle}</div>
-						<div className={"hidden w-0 text-xs lg:text-sm text-inactiveL"}>on {exercise.title && exercise.title} in {track.title && track.title}</div>
+						<div className={"hidden text-xs lg:text-sm text-inactiveL lg:block"}>on {exercise.title && exercise.title} in {track.title && track.title}</div>
 					</div>
 				</div>
 				<div className={"flex flex-row w-2/4 "}>

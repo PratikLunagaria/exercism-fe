@@ -14,7 +14,6 @@ export const FilterBox = ({inputVal, handleSearchChange}) => {
 				onChange={e=>setSearchVal(e.target.value)}
 				onKeyDown={(event)=> {
 					event.key === "Enter" && handleSearchChange(searchVal ? searchVal : undefined)
-					console.log(searchVal)
 				}}
 			/>
 		</div>
