@@ -20,7 +20,7 @@ export const Navbar = () => {
 		<header className={"border-b-2 border-borderL"}>
 			<div className={"flex items-center p-2 mx-9"}>
 				<a href={"/"}>
-					<img src={LogoIcon} alt={"exercism"} />
+					<img src={LogoIcon} alt={"exercism"}/>
 				</a>
 				<nav className={"flex flex-1"}>
 					<ul className={"flex items-center font-semibold"}>
@@ -32,10 +32,12 @@ export const Navbar = () => {
 					</ul>
 				</nav>
 				<div className={"flex items-center justify-end order-last"}>
-					<ChatBtn/>
-					<HexBtn/>
-					<NotificationBtn/>
-					<ReputationBtn/>
+					<div className={"hidden items-center xl:flex"}>
+						<ChatBtn/>
+						<HexBtn/>
+						<NotificationBtn/>
+						<ReputationBtn/>
+					</div>
 					<ProfileBtn/>
 				</div>
 			</div>

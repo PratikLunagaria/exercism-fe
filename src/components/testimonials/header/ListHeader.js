@@ -2,7 +2,7 @@ import {TrackDropdown} from "./dropdown/TrackDropdown";
 import {SortDropdown} from "./dropdown/SortDropdown";
 import {FilterBox} from "./FilterBox";
 
-export const ListHeader = ({listParams, setListParams}) => {
+export const ListHeader = ({listParams, setListParams, trackMetaList}) => {
 	const handleSearchChange = (inputQuery) => {
 		setListParams({...listParams, exercise: inputQuery})
 	}
@@ -18,7 +18,7 @@ export const ListHeader = ({listParams, setListParams}) => {
 	return (
 		<div className={"flex rounded-t-xl border-2 p-2 justify-between items-center"}>
 			<div className={"flex"}>
-				<TrackDropdown {...{listParams, handleTrackChange}}/>
+				<TrackDropdown {...{listParams, handleTrackChange, trackMetaList}}/>
 				<FilterBox {...{inputVal:listParams.exercise,handleSearchChange}}/>
 			</div>
 			<div className={"flex flex-1 justify-end"}>

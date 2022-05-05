@@ -1,29 +1,10 @@
-import {Fragment, useState, useEffect} from 'react'
+import {Fragment} from 'react'
 import {Listbox, Transition} from '@headlessui/react'
 import {ArrowDownIcon} from "../../../../assets/testimonials";
-import {getTracks} from "../../../../api";
 
 
-export const TrackDropdown = ({listParams, handleTrackChange}) => {
-	const [trackList, setTrackList] = useState([])
-	let currentTrack = trackList.filter((trc)=> listParams?.track ? trc.slug === listParams?.track : trc.slug === 'all')[0]
-
-	useEffect(() =>{
-		if(trackList.length === 0){
-			getTracks()
-				.then((res)=> {
-					let all = {
-						slug: 'all',
-						title: 'All',
-						num_exercises: res?.data?.tracks?.reduce((accumulator, element)=>  accumulator + element.num_exercises,0),
-						icon_url: 'https://svgshare.com/i/gqg.svg'
-					}
-					let allTracks = [all,...res.data.tracks]
-					setTrackList(allTracks)
-				})
-				.catch(err=> console.error(err))
-		}
-	},[trackList.length])
+export const TrackDropdown = ({listParams, handleTrackChange, trackMetaList}) => {
+	let currentTrack = trackMetaList.filter((trc)=> listParams?.track ? trc.slug === listParams?.track : trc.slug === 'all')[0]
 
 	return (
 		<div className="pr-2 font-semibold">
@@ -50,7 +31,7 @@ export const TrackDropdown = ({listParams, handleTrackChange}) => {
 					>
 						<Listbox.Options
 							className="absolute w-72 py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-							{trackList?.map((listElement) => (
+							{trackMetaList?.map((listElement) => (
 								<Listbox.Option
 									key={listElement.slug}
 									className={({active}) =>
@@ -67,7 +48,7 @@ export const TrackDropdown = ({listParams, handleTrackChange}) => {
 												<span className={'block truncate flex-1 px-2'}>
 							                        {listElement.title}
 						                        </span>
-												<div className={"border rounded-full px-2 py-1 border-gray-400"}>{listElement.num_exercises}</div>
+												<div className={"border rounded-full px-2 py-1 border-gray-400"}>{listElement.track_counts}</div>
 											</div>
 											{
 												selected ? (

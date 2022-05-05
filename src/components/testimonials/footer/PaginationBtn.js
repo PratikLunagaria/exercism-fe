@@ -1,5 +1,5 @@
 export const PaginationBtn = ({ isActive, isDisabled, icon, title, isIconLeft, isNum, onClick  }) => {
-	if(title === '-'){
+	if(title === '<' || title === '>'){
 		return (
 			<div className={`flex p-2 mx-2 rounded-md items-center`}>
 				<div className={"mx-2 text-sm"}>...</div>

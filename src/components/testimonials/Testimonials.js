@@ -1,33 +1,67 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, useCallback, useRef} from "react";
 import {List} from "./list";
 import {ListHeader} from "./header";
-import {getTestimonials} from "../../api";
+import {getTestimonials, getTracks} from "../../api";
 import {listParamsDefault} from "../../const";
 import {ListFooter} from "./footer";
 
 export const Testimonials = () => {
-    const [pagination, setPagination] = useState({})
     const [filteredList, setFilteredList] = useState([])
+    const [pagination, setPagination] = useState({})
     const [listParams, setListParams] = useState(listParamsDefault)
+    const [trackMetaList, setTrackMetaList] = useState([])
+    const isInitialMount = useRef(true);
 
-    useEffect(()=>{
-        let isSubscribed = true
-        if(isSubscribed){
+    const findTrackMeta = (trc,trcList) => trcList.filter(trcObj=> trcObj.slug === trc)[0];
+    const addTrackCount = useCallback((trcObj, trc, trackCount) => ({...trcObj, track_counts: trackCount[trc]}),[])
+    const fetchTestimonials = useCallback(() => getTestimonials(listParams)
+        .then((res) => {
+            setFilteredList(res.data?.testimonials?.results)
+            setPagination(res.data?.testimonials?.pagination)
+        })
+        .catch(err=> console.error(err)),[listParams])
+
+    useEffect(() =>{
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
             getTestimonials(listParams)
                 .then((res) => {
                     setFilteredList(res.data?.testimonials?.results)
                     setPagination(res.data?.testimonials?.pagination)
+                    let tracksArr = res.data?.testimonials?.tracks
+                    let trcCount = res.data?.testimonials?.track_counts
+                    if(trackMetaList.length === 0){
+                        getTracks()
+                            .then((res)=> {
+                                let filteredTracks = tracksArr.map(trc => addTrackCount(findTrackMeta(trc,res.data.tracks),trc, trcCount))
+                                let all = {
+                                    slug: 'all',
+                                    title: 'All',
+                                    track_counts: filteredTracks.reduce((accumulator, element)=>  accumulator + element.track_counts,0),
+                                    icon_url: 'https://svgshare.com/i/gqg.svg'
+                                }
+                                let allTracks = [all,...filteredTracks]
+                                setTrackMetaList(allTracks)
+                            })
+                            .catch(err=> console.error(err))
+                    }
                 })
                 .catch(err=> console.error(err));
         }
-        return () => isSubscribed = false
-    }, [listParams])
+    },[addTrackCount, listParams, trackMetaList.length])
+
+    useEffect(()=>{
+        if (!isInitialMount.current) {
+            fetchTestimonials()
+        }
+    },[fetchTestimonials])
+
 
     return (
-        <div className={"shadow-2xl border-2 min-w-fit flex flex-col rounded-xl mx-9 mb-9 h-4/5"}>
-            <ListHeader {...{listParams, setListParams}}/>
+        <div className={"shadow-2xl border-2 min-w-fit flex flex-col rounded-xl mx-9 mb-9 h-4/5 text-xs lg:text-base "}>
+            <ListHeader {...{listParams, setListParams, trackMetaList}}/>
             <List list={filteredList}/>
-            <ListFooter {...{pagination,listParams,setListParams}}/>
+            <ListFooter {...{pagination,listParams, setListParams}}/>
         </div>
     )
 }

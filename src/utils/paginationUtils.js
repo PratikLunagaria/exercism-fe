@@ -11,16 +11,16 @@ const getRHS = (pageNo, lastPage) => {
 export const pageNavNos = (currentPage, lastPage) => {
 	const firstPage = 1;
 	if(currentPage === firstPage){
-		return [firstPage, ...getRHS(currentPage, lastPage), '-', lastPage];
+		return [firstPage, ...getRHS(currentPage, lastPage), '>', lastPage];
 	} else if(currentPage === lastPage){
-		return [firstPage, '-', ...getLHS(currentPage, firstPage), lastPage ]
+		return [firstPage, '<', ...getLHS(currentPage, firstPage), lastPage ]
 	} else {
 		let pageWithNeighbours = [...getLHS(currentPage, firstPage), currentPage, ...getRHS(currentPage, lastPage)]
 		if(!pageWithNeighbours.includes(firstPage)){
-			pageWithNeighbours.unshift(firstPage,'-')
+			pageWithNeighbours.unshift(firstPage,'<')
 		}
 		if(!pageWithNeighbours.includes(lastPage)){
-			pageWithNeighbours.push('-',lastPage)
+			pageWithNeighbours.push('>',lastPage)
 		}
 		return pageWithNeighbours
 	}
