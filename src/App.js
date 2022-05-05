@@ -1,5 +1,15 @@
+import {Navbar} from "./components/navbar";
+import {Jumbotron} from "./components/jumbotron";
+import {Testimonials} from "./components/testimonials";
+
 function App() {
-	return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+	return (
+		<div className={"font-Poppins flex flex-col h-[83vh]"}>
+			<Navbar/>
+			<Jumbotron/>
+			<Testimonials/>
+		</div>
+	);
 }
 
 export default App;
